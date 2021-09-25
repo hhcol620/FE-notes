@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build VuePress
-        run: npm run build
+        run: npm run docs:build
       - name: Deploy to Pages
         env:
          TZ: Asia/Shanghai
