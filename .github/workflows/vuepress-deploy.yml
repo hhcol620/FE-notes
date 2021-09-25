@@ -1,0 +1,40 @@
+name: vuepress-deploy # 这里的名字就是你刚刚自定义那个文件的名字
+on:
+  push:
+    branches:
+      - master      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['lts/fermium']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          ref: 'master'
+          persist-credentials: false
+          fetch-depth: 0
+        env:
+          TZ: Asia/Shanghai
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@main
+        with:
+          node-version:  ${{ matrix.node }}
+      - name: Install dependencies
+        run: npm install
+      - name: Build VuePress
+        run: npm run build
+      - name: Deploy to Pages
+        env:
+         TZ: Asia/Shanghai
+        run: |
+         cd docs/.vuepress/dist
+         git config --global init.defaultBranch master
+         git init
+         git config user.name "hhcol620"
+         git config user.email "${{ secrets.GIT_EMAIL }}"
+         git add .
+         git commit -m "Deploying to gh-pages from @ $GITHUB_SHA in $(date +"%Y年%m月%d日 %T %Z")"
+         git push -f https://hhcol620:${{ secrets.ACCESS_TOKEN }}@github.com/hhcol620/vue3_study_analyse.git master:gh-pages
