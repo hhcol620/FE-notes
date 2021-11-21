@@ -18,16 +18,16 @@ module.exports = {
                 items: [
                     {
                         text: '工程实践',
-                        link: './FE-notes/engineering-practice/index.md'
+                        link: '/pages/engineering-practice/index.md'
                     },
                     //点击标签会跳转至link的markdown文件生成的页面
                     {
                         text: '源码分析',
-                        link: './FE-notes/sourcecode-analysis/index.md'
+                        link: '/pages/sourcecode-analysis/index.md'
                     }
                 ]
             },
-            { text: '常用工具', link: './FE-notes/tool-list/index.md' },
+            { text: '常用工具', link: '/pages/tool-list/index.md' },
 
             //格式三：跳转至外部网页，需http/https前缀
             { text: 'Github', link: 'https://github.com/hhcol620/FE-notes' }
