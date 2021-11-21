@@ -37,4 +37,4 @@ jobs:
          git config user.email "${{ secrets.GIT_EMAIL }}"
          git add .
          git commit -m "Deploying to gh-pages from @ $GITHUB_SHA in $(date +"%Y年%m月%d日 %T %Z")"
-         git push -f https://hhcol620:${{ secrets.ACCESS_TOKEN }}@github.com/hhcol620/vue3_study_analyse.git master:gh-pages
+         git push -f https://hhcol620:${{ secrets.ACCESS_TOKEN }}@github.com/hhcol620/FE-notes.git master:gh-pages
