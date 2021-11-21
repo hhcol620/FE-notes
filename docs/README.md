@@ -1,3 +1,3 @@
-# Hello VuePress
+# FE-notes
 
-### 自动化部署
+### FE-notes
