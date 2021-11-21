@@ -1,6 +1,6 @@
 module.exports = {
     //...省略部分代码
-    base: '/vue3_study_analyse/',
+    base: '/FE-notes/',
 
     //下面涉及到的md文件和其他文件的路径下一步再详细解释
     themeConfig: {
