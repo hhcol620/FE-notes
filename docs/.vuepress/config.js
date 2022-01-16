@@ -24,35 +24,51 @@ module.exports = {
                     {
                         text: '源码分析',
                         link: '/pages/sourcecode-analysis/index.md'
+                    },
+                    {
+                        text: '算法整理',
+                        link: '/pages/algorithm/index.md'
+                    },
+                    {
+                        text: '工具链',
+                        link: '/pages/tool-list/index.md'
                     }
                 ]
             },
             { text: '常用工具', link: '/pages/tool-list/index.md' },
-
             //格式三：跳转至外部网页，需http/https前缀
             { text: 'Github', link: 'https://github.com/hhcol620/FE-notes' }
         ],
 
-        //侧边导航栏：会根据当前的文件路径是否匹配侧边栏数据，自动显示/隐藏
+        // 侧边导航栏：会根据当前的文件路径是否匹配侧边栏数据，自动显示/隐藏
         sidebar: {
-            '/pages/folder1/': [
+            '/pages/engineering-practice/': [
                 {
-                    title: '测试菜单1', // 一级菜单名称
+                    title: '工程实践', // 一级菜单名称
+                    collapsable: false, // false为默认展开菜单, 默认值true是折叠,
+                    sidebarDepth: 1, //  设置侧边导航自动提取markdown文件标题的层级，默认1为h2层级
+                    children: []
+                }
+            ],
+            '/pages/sourcecode-analysis/': [
+                {
+                    title: '源码分析', // 一级菜单名称
                     collapsable: false, // false为默认展开菜单, 默认值true是折叠,
                     sidebarDepth: 1, //  设置侧边导航自动提取markdown文件标题的层级，默认1为h2层级
                     children: [
-                        ['test1.md', '子菜单1'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
-                        ['test3.md', '子菜单2']
+                        ['vue-router.md', 'VueRouter'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
+                        ['vuex.md', 'VueX']
                     ]
-                },
+                }
+            ],
+            '/pages/engineering-practice/': [
                 {
-                    title: '测试菜单2',
-                    collapsable: false,
-                    children: [['test2.md', '子菜单1']]
+                    title: '算法整理', // 一级菜单名称
+                    collapsable: false, // false为默认展开菜单, 默认值true是折叠,
+                    sidebarDepth: 1, //  设置侧边导航自动提取markdown文件标题的层级，默认1为h2层级
+                    children: []
                 }
             ]
-
-            //...可添加多个不同的侧边栏，不同页面会根据路径显示不同的侧边栏
         }
     }
 };
