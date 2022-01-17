@@ -1,4 +1,4 @@
-# vueRouter
+# vueRouter v3.5.3
 
 
 ## vue-router插件介绍：
@@ -54,7 +54,7 @@
 * 通过Vue.component在全局声明两个组件
 
 ## 传入new VueRouter中的配置项及作用
-* 传入配置项
+* 传入配置项内容
     ```javascript
     {
         mode: 'hash',
@@ -66,6 +66,70 @@
         ]
     }
     ```
+
+* 看下VueRouter的构造函数 [VueRouter构造函数](https://github.com/vuejs/vue-router/blob/dev/src/index.js#L41-L79)
+    ``` javascript
+    construcor(options) {
+        this.options = options
+        this.matcher = createMatcher(options.routes || [], this)
+        let mode = options.mode || 'hash'
+        if(mode === 'hase') {
+            // 这个里面的第二个参数可以先不用去关注
+            this.history = new HashHistory(this, options.base, this.fallback)
+        }
+    }
+    ```
+* 构造函数中主要做了以下3件事
+    1. 将`options`存放在实例属性中
+    2. 构建matcher
+        * 通过调用 `createRouteMap` 构建`pathList`, `pathMap`, `nameMap`
+
+            ::: tip 提示
+            1. pathList 是一个有路由配置参数中routes数组每项中的path 组成
+            2. pathMap 是一个由path作为key, record作为value的对象 (record为一个对象)
+            3. nameMap 是一个由name作为key, record作为value的对象 (record为一个对象)
+            :::
+
+        * 返回是一个包含四个方法的对象 addRoute, addRoutes, getRoutes, match
+
+            ::: tip 提示
+            1. addRoute 添加单个路由
+            2. addRoutes 调用createRouteMap，并把routes, pathList, pathMap, nameMap作为参数传入，会将routes按照规范处理，将处理后的结果添加到后面三个参数中
+            3. getRoutes 返回由record组成的数组
+            4. match 遍历pathList，根据record上的正则和path对比，获取path中的params，并设置到location上，并最终返回`createRoute`构建的对象 (不考虑name存在的情况)
+            :::
+
+    3. 实例化`history`mode值为hash
+        * 实例化的是`HashHistory`，传入参数 `this, options.base, this.fallback` 第三个参数可以先不用关注， 想了解可以看[fallback](https://github.com/vuejs/vue-router/blob/dev/src/index.js#L54-L69)
+        * `HashHistory` 继承自 `History`
+        * `HashHistory` 构造函数中调用`ensureSlash`确保hash是以/开头，如果不是，vue-router会补充'/'， 并通过history.replaceState()这个方法去替换历史记录
+            ::: tip 提示
+            例如原来的浏览器地址栏为 `http://localhost:8080/hash-mode/#foo`，光标放到地址栏回车之后，代码执行到 `ensureSlash`，浏览器地址栏中的url会被替换为 `http://localhost:8080/hash-mode/#/foo`
+            :::
+        * `HashHistory`上的几个重要的方法
+            1. setupListeners
+            2. push
+            3. replace
+            4. go
+            5. getCurrentLocation
+            6. ensureURL
+        * `History` 构造函数创建实例属性 this.router, this.base, this.current, 还有一些钩子 ....
+            ::: tip 提示
+            `this.base = normalizeBase(base)`
+            normalizeBase()作用1. 是无base的时候从base标签上的href获取 2. 判断base开头是不是/， 不是的情况下头部补充/ 3. 把base中的尾部的/的删除
+            :::
+        * `History` 上的几个重要的方法
+            1. listen
+            2. onReady
+            3. onError
+            4. transitionTo
+            5. confirmTransition
+            6. updateRoute
+            7. teardown
+
+
+
+
 
 ## 两个自带组件的功能和原理
 * router-view
