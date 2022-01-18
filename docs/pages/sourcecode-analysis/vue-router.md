@@ -96,7 +96,7 @@
             1. addRoute 添加单个路由
             2. addRoutes 调用createRouteMap，并把routes, pathList, pathMap, nameMap作为参数传入，会将routes按照规范处理，将处理后的结果添加到后面三个参数中
             3. getRoutes 返回由record组成的数组
-            4. match 遍历pathList，根据record上的正则和path对比，获取path中的params，并设置到location上，并最终返回`createRoute`构建的对象 (不考虑name存在的情况)
+            4. match 遍历pathList，根据record上的正则和path对比，获取path中的params，并设置到location上，并最终返回`createRoute`构建的route对象 (不考虑name存在的情况)
             :::
 
     3. 实例化`history`mode值为hash
@@ -123,9 +123,30 @@
             2. onReady
             3. onError
             4. transitionTo
+                ::: tip 提示
+                transitionTo主要做了两件事，分别是 
+                1. 会根据location和this.current匹配路由信息route (这一步操作调用了createMatcher生成的match方法)
+                2. 调用this.confirmTransition(route, onComplete, onAbort) 传入上一步的路由、成功和失败回调
+                    * 在成功的回调里面1. 更新current，赋值为新的路由  2. 执行transitionTo参数的成功的回调   3. 执行导航后置守卫的钩子
+                    * 在失败的回调里面执行transitionTo参数的失败回调
+                :::
             5. confirmTransition
+                ::: tip 提示
+                confirmTransition主要做了两件事，分别是 
+                1. 根据上一次和当前的路由信息获取哪些组件要被卸载，哪些要做缓存，哪些要做挂载  方法名：resolveQueue
+                2. 队列的方式执行钩子函数
+                :::
             6. updateRoute
             7. teardown
+                ::: tip 提示
+                teardown 主要做了两件事，分别是
+                1. 遍历执行listeners上所有的方法
+                2. 还原实例属性
+                ```javascript
+                this.listeners = [] 
+                this.current = START
+                ````
+                :::
 
 
 
