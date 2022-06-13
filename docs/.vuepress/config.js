@@ -17,6 +17,10 @@ module.exports = {
                 ariaLabel: '分类', //用于识别的label
                 items: [
                     {
+                        text: '面试真题',
+                        link: '/pages/interviews-QA/index.md'
+                    },
+                    {
                         text: '工程实践',
                         link: '/pages/engineering-practice/index.md'
                     },
