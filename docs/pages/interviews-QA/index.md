@@ -36,6 +36,36 @@
     
     ```
 
-3. 数组展开
+3. 数组展开/ 拍平
+    ```js
+        // 第一种方法
+        function arrFlat (arr, depth = 1) {
+            return arr.flat(depth)
+        }
+        // 第二种方法
+        function arrFlat (arr, depth = 1) {
+            return depth > 0 ? arr.reduce((acc, cur) => {
+                console.log('acc', acc)
+                return acc.concat(Array.isArray(cur) ? arrFlat(cur, depth - 1) : cur)
+            }, []) : arr.slice();
+        }
+        // 第三种方法
+        function arrFlat (arr, depth = 1) {
+            const result  = [];
+            (function flat(arr, depth) {
+                arr.forEach(item => {
+                    if(Array.isArray(item) && depth > 0) {
+                        flat(item, depth - 1)
+                    } else {
+                        result.push(item)
+                    }
+                });
+            })(arr, depth)
+            return result;
+        }
+
+    ```
 
 4. instanceof 实现
+
+5. 实现new

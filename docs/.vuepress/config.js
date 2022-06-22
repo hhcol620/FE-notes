@@ -60,8 +60,11 @@ module.exports = {
                     collapsable: false, // false为默认展开菜单, 默认值true是折叠,
                     sidebarDepth: 1, //  设置侧边导航自动提取markdown文件标题的层级，默认1为h2层级
                     children: [
-                        ['vue-router.md', 'VueRouter'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
-                        ['vuex.md', 'VueX']
+                        ['vue-router.md', 'VueRouter'],
+                        ['vuex.md', 'VueX'],
+                        ['vue2.md', 'Vue2'],
+                        ['vue3.md', 'Vue3'],
+                        ['Google.v8.md', 'Google.v8'],
                     ]
                 }
             ],
