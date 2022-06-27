@@ -67,5 +67,45 @@
     ```
 
 4. instanceof 实现
+    ```js
+        function instance (left, right) {
+            let prototype = right.prototype;
+            let proto = left.__proto__;
+            while(proto !== null) {
+                if(proto === prototype) {
+                    return true;
+                }
+                proto = proto.__proto__;
+            }
+            return false;
+        }
 
-5. 实现new
+        let obj = {a: 10}
+        console.log(instance(obj, Object)) // true
+
+        function Parent() {
+            this.a = 1;
+        }
+        let obj2 = new Parent();
+        console.log(instance(obj2, Parent)) // true
+        console.log(instance(obj2, Object)) // true
+    ```
+
+5. 实现new 执行了哪些功能呢
+    * 首先创建一个对象
+    * 将构造函数的原型挂载到该对象上
+    * 执行构造函数，并绑定this为刚新创建的对象
+    * 判断构造函数的执行结果，如果为对象或者是函数，则返回构造函数的返回值，否则返回新创建的对象
+    ```js
+        function newOperator(fn, ...args){
+            if(typeof fn !== 'function') {
+                throw new TypeError(fn + 'is not function')
+            }
+            const obj = Object.create(fn.prototype);
+            const res = fn.call(obj, ...args);
+            const isObjcet = typeof res === 'object' && res !== null
+            const isFunction = typeof res === 'function'
+            return isFunction || isObjcet ? res : obj;
+        }
+
+    ```
