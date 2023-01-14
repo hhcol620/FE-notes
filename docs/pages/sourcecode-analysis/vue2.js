@@ -12,6 +12,9 @@ class Observer {
     // 相当于为value打上标记，表示它已经被转化成响应式了，避免重复操作
     def(value, '__ob__', this);
     if (Array.isArray(value)) {
+      const augment = hasProto ? protoAugment : copyAugment;
+      const arrayKeys = Object.getOwnPropertyNames(arrayMethods)
+      augment(value, arrayMethods, arrayKeys);
     } else {
       this.work(value);
     }
@@ -69,6 +72,25 @@ class Watcher {
     const oldValue = this.value;
     this.value = this.get();
     this.cb.call(this.vm, this.value, oldValue);
+  }
+}
+
+// 能力检测：判断__proto__是否可用，因为有的浏览器不支持该属性
+export const hasProto = '__proto__' in {};
+
+function protoAugment(target, src, keys) {
+  target.__proto__ = src;
+}
+
+/**
+ * Augment an target Object or Array by defining
+ * hidden properties.
+ */
+/* istanbul ignore next */
+function copyAugment(target, src, keys) {
+  for (let i = 0, l = keys.length; i < l; i++) {
+    const key = keys[i];
+    def(target, key, src[key]);
   }
 }
 
