@@ -18,7 +18,7 @@ module.exports = {
         items: [
           {
             text: '面试真题',
-            link: '/pages/interviews-QA/index.md'
+            link: '/pages/interviews/index.md'
           },
           {
             text: '工程实践',
